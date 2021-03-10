@@ -10,19 +10,25 @@ This repository contains custom ARM templates needed that can be used to provisi
 
 For the VirtualNetworkDeploy template, only an azure subscription and a resource group should be present while deploying the template
 
-**LinuxVMDeploy**
+**MultiWin2019VmMultiDataDiskLBDeploy**
+
+This folder has the json code that provisions multiple Windows 2019 DC VMs within an availability set. It also deploys a basic internal load balancer and places the VMs behind the load balancer (as backend addresses). Click the below button to deploy this to Azure.
+
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMahindraManoj%2Farm-templates%2Fmaster%2FMultiWin2019VmMultiDataDiskLBDeploy%2Fwinvmslbdeploy.json)
+
+**UbuntuVMDeploy**
 
 This folder contains the json code that will provision an Ubuntu 18.04 LTS VM with size Standard_B2ms. To deploy this, click the below button.
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMahindraManoj%2Farm-templates%2Fmaster%2FLinuxVMDeploy%2Fazuredeploy.json)
 
-**MultiWin2019VmMutilDataDiskDeploy**
+**MultiWin2019VmMultiDataDiskDeploy**
 
 This folder contains the json code to provision mutiple windows server 2019 DC edition VMs with Mutiple Data Disks attached to each VM. To deploy the template, click the below button.
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMahindraManoj%2Farm-templates%2Fmaster%2FMultiWin2019VmMutilDataDiskDeploy%2Fazuremultivmsdeploy.json)
 
-**MutilWin2019VmMultiSharedDiskDeploy**
+**MultiWin2019VmMultiSharedDiskDeploy**
 
 This contains the json code to provision  mutiple windows server 2019 DC edition VMs with mutiple data disks shared between the VMs.
 
