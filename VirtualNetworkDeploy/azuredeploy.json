@@ -24,8 +24,11 @@
         "subnetprefix":{
             "type":"string",
             "allowedValues": [
-                "10.10.10.0/29",
-                "10.10.10.16/28"
+                "10.10.10.0/24",
+                "10.10.10.0/25",
+                "10.10.10.0/26",
+                "10.10.10.0/27",
+                "10.10.10.0/28"
             ],
             "metadata": {
                 "description":"Address prefix of the subnet"
