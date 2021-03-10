@@ -41,7 +41,7 @@ This template creates a virtual network (and a subnet). To deploy, click below b
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMahindraManoj%2Farm-templates%2Fmaster%2FVirtualNetworkDeploy%2Fazuredeploy.json)
 
-**WinVMDeploy**
+**WinServerVmDeploy**
 
 This template provisions either a Win 2016 Data Center VM or a Win 2019 Data Center VM. It can have data disk(s) attached to it if needed. To deploy this, click below button.
 
