@@ -1,0 +1,220 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+  "parameters": {
+    "existingVnetName": {
+      "type": "string",
+      "metadata": {
+        "description": "Vnet where the VM will be deployed"
+      }
+    },
+    "existingSubnetName": {
+      "type": "string",
+      "metadata": {
+        "description": "Subnet where the VM will be deployed"
+      }
+    },
+    "availabilitySetName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the availability set."
+      }
+    },
+    "vmNamePrefix": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the VM resource."
+      }
+    },
+    "vmCount": {
+      "type": "int",
+      "metadata": {
+        "description": "Number of VMs to be deployed for this deployment."
+      }
+    },
+    "adminUsername": {
+      "type": "string",
+      "metadata": {
+        "description": "Admin username for the VM"
+      }
+    },
+    "adminPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Admin password for the VM"
+      }
+    },
+    "numberOfDataDisks": {
+      "type": "int",
+      "minValue": 0,
+      "maxValue": 5,
+      "metadata": {
+        "description": "Number of dataDisks to be attached per vm."
+      }
+    },
+    "dataDiskSizeGB": {
+      "type": "int",
+      "allowedValues": [
+        32,
+        64,
+        128,
+        256,
+        512,
+        1024,
+        2048,
+        4096,
+        8192
+      ],
+      "metadata": {
+        "description": "Size of the data disk that will be attached to the VM."
+      }
+    },
+    "vmSize": {
+      "type": "string",
+      "allowedValues": [
+        "Standard_B2ms",
+        "Standard_D2s_v3",
+        "Standard_D4s_v3",
+        "Standard_D8s_v3",
+        "Standard_D16s_v3",
+        "Standard_D32s_v3"
+      ],
+      "defaultValue": "Standard_B2ms",
+      "metadata": {
+        "description": "Size of the VM"
+      }
+    }
+  },
+    "variables": {
+        "vnetID": "[resourceId('Microsoft.Network/virtualNetworks', parameters('existingVnetName'))]",
+        "subnetID": "[concat(variables('vnetID'),'/subnets/', parameters('existingSubnetName'))]" 
+    },
+    "resources": [
+        {
+            "name": "[parameters('availabilitySetName')]",
+            "type": "Microsoft.Compute/availabilitySets",
+            "apiVersion": "2018-10-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "platformUpdateDomainCount": 5,
+                "platformFaultDomainCount": 3
+            },
+            "sku": {
+                "name": "aligned"
+            }
+        },
+        {
+            "name": "[concat(parameters('vmNamePrefix'), copyIndex(1), '_nic')]",
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2019-11-01",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "displayName": "networkInterface1"
+            },
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "subnet": {
+                                "id":"[variables('subnetID')]"
+                            }
+                        }
+                    }
+                ]
+            },
+            "copy": {
+                "name": "nicCopy",
+                "count": "[parameters('vmCount')]"
+            }
+        }, 
+        {
+            "copy": {
+                "name": "vmCopy",
+                "count": "[parameters('vmCount')]"
+            },  
+            "name": "[concat(parameters('vmNamePrefix'), copyIndex(1))]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2020-06-01",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySetName'))]",
+                "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('vmNamePrefix'), copyIndex(1), '_nic'))]"
+            ],
+            "properties": {
+                "availabilitySet": {
+                    "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySetName'))]"
+                },
+                "hardwareProfile": {
+                    "vmSize": "[parameters('vmSize')]"
+                },
+                "osProfile": {
+                    "computerName": "[concat(parameters('vmNamePrefix'), copyIndex(1))]",
+                    "adminUsername": "[parameters('adminUsername')]",
+                    "adminPassword": "[parameters('adminPassword')]",
+                    "windowsConfiguration": {
+                        "provisionVMAgent": true,
+                        "enableAutomaticUpdates": true,
+                        "timeZone": "Eastern Standard Time"
+                    }
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "MicrosoftWindowsServer",
+                        "offer": "WindowsServer",
+                        "sku": "2019-Datacenter",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "name": "[concat(parameters('vmNamePrefix'), copyIndex(1), '_OSDisk')]",
+                        "caching": "ReadWrite",
+                        "createOption": "FromImage",
+                        "managedDisk": {
+                            "storageAccountType": "Premium_LRS"
+                        }
+                    },
+                    "copy": [
+                            {
+                                "name": "dataDisks",
+                                "count": "[parameters('numberOfDataDisks')]",
+                                "input": {
+                                    "name": "[concat(parameters('vmNamePrefix'), copyIndex(1), '_DataDisk_', copyIndex('dataDisks'))]",
+                                    "diskSizeGB": "[parameters('dataDiskSizeGB')]",
+                                    "lun": "[copyIndex('dataDisks')]",
+                                    "createOption": "Empty",
+                                    "caching": "None",
+                                    "managedDisk": {
+                                      "storageAccountType":  "Premium_LRS"
+                                    }
+                                }
+                            }
+                        ]
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('vmNamePrefix'), copyIndex(1), '_nic'))]"
+                        }
+                    ]
+                },
+                "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                        "enabled": true
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {
+        "resourceID": {
+            "type": "array",
+            "copy": {
+                "count": "[parameters('vmCount')]",
+                "input": {
+                    "value": "[resourceId('Microsoft.Compute/virtualMachines', concat(parameters('vmNamePrefix'), copyIndex(1)))]"
+                }
+            }
+        }
+    }
+}

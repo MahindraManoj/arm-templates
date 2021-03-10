@@ -1,0 +1,36 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "existingVnetName": {
+            "value": "" 
+        },
+        "existingSubnetName": {
+            "value": "" 
+        },
+        "availabilitySetName": {
+            "value": "" 
+        },
+        "vmNamePrefix": {
+            "value": "" 
+        },
+        "vmCount": {
+            "value": 0 
+        },
+        "adminUsername": {
+            "value": "" 
+        },
+        "adminPassword": {
+            "value": "" 
+        },
+        "numberOfDataDisks": {
+            "value": 0 
+        },
+        "dataDiskSizeGB": {
+            "value": 0 
+        },
+        "vmSize": {
+            "value": "Standard_B2ms"
+        }
+    }
+}

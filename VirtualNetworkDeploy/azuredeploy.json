@@ -1,0 +1,65 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vnetName": {
+            "type": "string",
+            "metadata": {
+                "description":"Name of the Virtual Network that will be deployed"
+            }
+        },
+        "vnetAddressPrefix":{
+            "type": "string",
+            "defaultValue": "10.10.10.0/24",
+            "metadata": {
+                "description":"Address prefix of the virtual network"
+            }
+        },
+        "subnetName": {
+            "type": "string",
+            "metadata": {
+                "description":  "Name of the subnet"
+             }
+        },
+        "subnetprefix":{
+            "type":"string",
+            "allowedValues": [
+                "10.10.10.0/29",
+                "10.10.10.16/28"
+            ],
+            "metadata": {
+                "description":"Address prefix of the subnet"
+            }
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2018-08-01",
+            "name": "[parameters('vnetName')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[parameters('vnetAddressPrefix')]"
+                    ]
+                },
+                "subnets":[ {   
+                        "type": "subnets",
+                        "name": "[parameters('subnetName')]",
+                        "location": "[resourceGroup().location]",
+                        "properties": {
+                            "addressPrefix": "[parameters('subnetprefix')]"
+                        }
+                    }]
+            }
+        }
+    ],
+    "outputs": {
+        "resourceID": {
+            "type": "string",
+            "value": "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]"
+        }
+    }
+}
