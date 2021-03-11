@@ -1,6 +1,6 @@
 # arm-templates
 
-This repository contains custom ARM templates needed that can be used to provision resources such as Vnet, Windows VM(s), Ubuntu VMs, multiple windows server VMs with shared disks in an azure subscription.
+This repository contains custom ARM templates that can be used to provision resources such as Vnet, Windows VMs, Ubuntu VMs, multiple windows server VMs with shared disks in an azure subscription.
 
 **Prerequisites for the templates to work are below:**
 
@@ -30,7 +30,7 @@ This folder contains the json code to provision mutiple windows server 2019 DC e
 
 **MultiWin2019VmMultiSharedDiskDeploy**
 
-This contains the json code to provision  mutiple windows server 2019 DC edition VMs with mutiple data disks shared between the VMs.
+This contains the json code to provision mutiple windows server 2019 DC edition VMs with mutiple data disks shared between the VMs.
 
 Prerequisite:
 
