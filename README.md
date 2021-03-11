@@ -35,7 +35,7 @@ This contains the json code to provision mutiple windows server 2019 DC edition 
 Prerequisite:
 
 - Understand how shared disk concept works before if not familiar with it.
-- The mazShares property for the data disks that will get created has been set to 2. If the disk(s) need to be shared with more than 2 VMs, then the value needs to be changed accordingly.
+- The maxShares property for the data disks that will get created has been set to 2. If the disk(s) need to be shared with more than 2 VMs, then the value needs to be changed accordingly.
 
 To deploy this template, click the below button.
 
