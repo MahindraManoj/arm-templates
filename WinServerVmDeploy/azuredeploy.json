@@ -180,13 +180,7 @@
                           }
                       ]
                   },
-                  "licenseType": "Windows_Server",
-                  "diagnosticsProfile": {
-                      "bootDiagnostics": {
-                          "enabled": true,
-                          "storageUri": ""
-                      }
-                  }
+                  "licenseType": "Windows_Server"
               }
           }
     ],
