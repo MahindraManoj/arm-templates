@@ -20,5 +20,5 @@ steps:
       location: 'Canada Central'
       templateLocation: 'URL of the file'
       csmFileLink: 'https://raw.githubusercontent.com/MahindraManoj/arm-templates/master/WinServerVmDeploy/azuredeploy.json'
-      csmParametersFileLink: 'https://raw.githubusercontent.com/MahindraManoj/arm-templates/master/WinServerVmDeploy/parameters.azuredeploy.json'
+      csmParametersFileLink: 'https://raw.githubusercontent.com/MahindraManoj/arm-templates/master/WinServerVmDeploy/azuredeploy.parameters.json'
       deploymentMode: 'Incremental'
