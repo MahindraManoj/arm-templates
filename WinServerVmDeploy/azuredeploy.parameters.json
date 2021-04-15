@@ -3,28 +3,28 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "existingVnetName": {
-            "value": "myVnet" 
+            "value": "myVnet"
         },
         "existingSubnetName": {
-            "value": "subnet1" 
+            "value": "subnet2"
         },
         "OSVersion": {
             "value": "2019-Datacenter"
         },
         "vmName": {
-            "value": "myVM1" 
+            "value": "myVM1"
         },
         "vmSize": {
             "value": "Standard_B2ms"
         },
         "adminUsername": {
-            "value": "myadmin" 
+            "value": "myadmin"
         },
         "adminPassword": {
-            "value": "Password#123" 
+            "value": "Password#123"
         },
         "numberOfDataDisks": {
-            "value": 1 
+            "value": 1
         },
         "dataDiskSizeGB": {
             "value": 64
