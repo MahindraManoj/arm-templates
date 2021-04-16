@@ -171,16 +171,16 @@
                                     "caching": "None"
                                 }
                             }
-                      ]
-                  },
-                  "networkProfile": {
-                      "networkInterfaces": [
-                          {
-                              "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('nicName'))]"
-                          }
-                      ]
-                  },
-                  "licenseType": "Windows_Server"
+                        ]
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('nicName'))]"
+                        }
+                    ]
+                },
+                "licenseType": "Windows_Server"
             }
         }
     ],
